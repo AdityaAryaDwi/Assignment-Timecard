@@ -1,5 +1,5 @@
 import pandas as pd
-
+import sys
 # Reading the CSV file into a DataFrame
 file_path = "Assignment_Timecard.csv"
 df = pd.read_csv(file_path)
@@ -55,3 +55,27 @@ print("\nEmployees who have worked for more than 14 hours in a single shift:")
 for position_id in long_shift_employees:
     employees = df[df['Position ID'] == position_id]['Employee Name'].unique()
     print(f"{position_id}, {', '.join(employees)}")
+
+# Redirect console output to a file    
+with open('output.txt', 'w') as f:
+    sys.stdout = f
+
+    # Your existing code for printing the results
+    print("Analysis Results:")
+    print("\nEmployees who have worked for 7 consecutive days:")
+    for position_id in consecutive_days_employees:
+        employees = df[df['Position ID'] == position_id]['Employee Name'].unique()
+        print(f"{position_id}, {', '.join(employees)}")
+
+    print("\nEmployees with less than 10 hours between shifts but greater than 1 hour:")
+    for position_id in time_between_shifts_employees:
+        employees = df[df['Position ID'] == position_id]['Employee Name'].unique()
+        print(f"{position_id}, {', '.join(employees)}")
+
+    print("\nEmployees who have worked for more than 14 hours in a single shift:")
+    for position_id in long_shift_employees:
+        employees = df[df['Position ID'] == position_id]['Employee Name'].unique()
+        print(f"{position_id}, {', '.join(employees)}")
+
+# Reset console output to its original state
+sys.stdout = sys.__stdout__
